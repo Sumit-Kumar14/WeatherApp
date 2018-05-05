@@ -11,7 +11,7 @@ import retrofit2.http.Query
 
 interface WeatherAppServiceInterface {
 
-    @GET("/weather")
+    @GET("data/2.5/weather")
     fun getWeatherDataFromNetwork(@Query("q") city : String, @Query("appid") key : String) : Call<WeatherData>
 
 }
