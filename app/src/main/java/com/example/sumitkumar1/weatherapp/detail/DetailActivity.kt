@@ -7,9 +7,9 @@ import android.app.ProgressDialog
 import com.example.sumitkumar1.weatherapp.datasource.WeatherData
 import kotlinx.android.synthetic.main.activity_weather.*
 import retrofit2.Response
+import java.util.*
 
-
-class DetailActivity : AppCompatActivity(), DetailView{
+class DetailActivity : AppCompatActivity(), DetailView {
 
     lateinit var detailPresenter : DetailPresenter
     lateinit var progressLoader : ProgressDialog
@@ -41,9 +41,41 @@ class DetailActivity : AppCompatActivity(), DetailView{
 
     override fun updateUI(response: Response<WeatherData>) {
         tv_location.text = response.body()?.name
-        val temp : Float? = response.body()?.main?.temp?.toFloatOrNull()
-        if(temp != null) {
-            tv_temp.text = (temp - 273.15).toString()
+        tv_temp.text = convertTempFromStringToInt(response.body()!!.main!!.temp!!).toString() + 0x00B0.toChar()
+        tv_day.text = getDayOfWeek()
+        tv_max_temp.text = convertTempFromStringToInt(response.body()!!.main!!.tempMax!!.toString()).toString() + 0x00B0.toChar()
+        tv_min_temp.text = convertTempFromStringToInt(response.body()!!.main!!.tempMin!!.toString()).toString() + 0x00B0.toChar()
+        tv_degree.text = getWindDirection(response.body()!!.wind!!.deg!!.toInt())
+        tv_wind_speed.text = response.body()!!.wind!!.speed!!.toString() + " m/s"
+        tv_pressure.text = response.body()!!.main!!.presure!!.toString() + " hPa"
+    }
+
+    private fun convertTempFromStringToInt(temp : String) : Int {
+        val temp : Float? = temp.toFloatOrNull()
+        return temp?.minus(273.15)!!.toInt()
+    }
+
+    private fun getDayOfWeek() : String {
+        val day : Int = Calendar.getInstance()!!.get(Calendar.DAY_OF_WEEK)
+        when (day) {
+            Calendar.SUNDAY -> return "Sunday"
+            Calendar.MONDAY -> return "Monday"
+            Calendar.TUESDAY -> return "Tuesday"
+            Calendar.WEDNESDAY -> return "Wednesday"
+            Calendar.THURSDAY -> return "Thursday"
+            Calendar.FRIDAY -> return "Friday"
+            Calendar.SATURDAY -> return "Saturday"
         }
+        return ""
+    }
+
+    private fun getWindDirection(degree : Int) : String {
+        when (degree) {
+            in 0..89 -> return "NE"
+            in 90..179 -> return "SE"
+            in 180..260 -> return "SW"
+            in 270..360 -> return "NW"
+        }
+        return "NE"
     }
 }

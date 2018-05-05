@@ -8,4 +8,32 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="BaseTheme">
+        <item name="android:textColor">#FFF</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:fontFamily">sans-serif-normal</item>
+    </style>
+
+    <style name="LocationName" parent="BaseTheme" >
+        <item name="android:textSize">28sp</item>
+        <item name="android:fontFamily">sans-serif-normal</item>
+    </style>
+
+    <style name="Condition" parent="BaseTheme">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="Temperature" parent="BaseTheme">
+        <item name="android:textSize">78sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:fontFamily">sans-serif-thin</item>
+    </style>
+
 </resources>
