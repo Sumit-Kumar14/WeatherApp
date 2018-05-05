@@ -11,8 +11,8 @@ import retrofit2.Response
 
 class DetailActivity : AppCompatActivity(), DetailView{
 
-    private var detailPresenter : DetailPresenter? = null
-    private var progressLoader : ProgressDialog? = null
+    lateinit var detailPresenter : DetailPresenter
+    lateinit var progressLoader : ProgressDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,22 +21,22 @@ class DetailActivity : AppCompatActivity(), DetailView{
         initProgressDialog()
 
         detailPresenter = DetailPresenter(this)
-        detailPresenter?.fetchWeatherDataByCityName("Bangalore")
+        detailPresenter.fetchWeatherDataByCityName("Bangalore")
     }
 
-    fun initProgressDialog() {
+    private fun initProgressDialog() {
         progressLoader = ProgressDialog(this)
-        progressLoader?.setTitle("Loading")
-        progressLoader?.setMessage("Wait while loading...")
-        progressLoader?.setCancelable(false)
+        progressLoader.setTitle("Loading")
+        progressLoader.setMessage("Wait while loading...")
+        progressLoader.setCancelable(false)
     }
 
     override fun showLoader() {
-        progressLoader?.show()
+        progressLoader.show()
     }
 
     override fun hideLoader() {
-        progressLoader?.dismiss()
+        progressLoader.dismiss()
     }
 
     override fun updateUI(response: Response<WeatherData>) {
