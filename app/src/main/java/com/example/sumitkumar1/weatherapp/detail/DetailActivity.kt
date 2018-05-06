@@ -10,7 +10,6 @@ import com.example.sumitkumar1.weatherapp.cities.CitiesActivity
 import com.example.sumitkumar1.weatherapp.datasource.WeatherData
 import kotlinx.android.synthetic.main.activity_weather.*
 import retrofit2.Response
-import java.util.*
 
 class DetailActivity : AppCompatActivity(), DetailView {
 
@@ -55,47 +54,13 @@ class DetailActivity : AppCompatActivity(), DetailView {
 
     override fun updateUI(response: Response<WeatherData>) {
         tv_location.text = response.body()?.name
-        tv_temp.text = convertTempFromStringToInt(response.body()!!.main!!.temp!!).toString() + 0x00B0.toChar()
-        tv_day.text = getDayOfWeek()
-        tv_max_temp.text = convertTempFromStringToInt(response.body()!!.main!!.tempMax!!.toString()).toString() + 0x00B0.toChar()
-        tv_min_temp.text = convertTempFromStringToInt(response.body()!!.main!!.tempMin!!.toString()).toString() + 0x00B0.toChar()
-        val deg = response.body()?.wind?.deg?.toInt()
-        if(deg == null) {
-            tv_degree.text = "NE"
-        }else {
-            tv_degree.text = getWindDirection(deg)
-        }
-        tv_wind_speed.text = response.body()!!.wind!!.speed!!.toString() + " m/s"
-        tv_pressure.text = response.body()!!.main!!.presure!!.toString() + " hPa"
-    }
-
-    private fun convertTempFromStringToInt(temp : String) : Int {
-        val temp : Float? = temp.toFloatOrNull()
-        return temp?.minus(273.15)!!.toInt()
-    }
-
-    private fun getDayOfWeek() : String {
-        val day : Int = Calendar.getInstance()!!.get(Calendar.DAY_OF_WEEK)
-        when (day) {
-            Calendar.SUNDAY -> return "Sunday"
-            Calendar.MONDAY -> return "Monday"
-            Calendar.TUESDAY -> return "Tuesday"
-            Calendar.WEDNESDAY -> return "Wednesday"
-            Calendar.THURSDAY -> return "Thursday"
-            Calendar.FRIDAY -> return "Friday"
-            Calendar.SATURDAY -> return "Saturday"
-        }
-        return ""
-    }
-
-    private fun getWindDirection(degree : Int) : String {
-        when (degree) {
-            in 0..89 -> return "NE"
-            in 90..179 -> return "SE"
-            in 180..260 -> return "SW"
-            in 270..360 -> return "NW"
-        }
-        return "NE"
+        tv_temp.text = detailPresenter.getMainTemp(response)
+        tv_day.text = detailPresenter.getDayOfWeek()
+        tv_max_temp.text = detailPresenter.getMaxTemp(response)
+        tv_min_temp.text = detailPresenter.getMinTemp(response)
+        tv_degree.text = detailPresenter.getWinDir(response)
+        tv_wind_speed.text = detailPresenter.getWindSpeed(response)
+        tv_pressure.text = detailPresenter.getPressure(response)
     }
 
     private fun setUpFabListener() {
