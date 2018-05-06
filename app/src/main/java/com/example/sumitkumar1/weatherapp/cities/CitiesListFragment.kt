@@ -1,5 +1,6 @@
 package com.example.sumitkumar1.weatherapp.cities
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -7,10 +8,12 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.example.sumitkumar1.weatherapp.R
 import com.example.sumitkumar1.weatherapp.adapters.CitiesListAdapter
 import com.example.sumitkumar1.weatherapp.datasource.Cities
+import com.example.sumitkumar1.weatherapp.detail.DetailActivity
+import com.example.sumitkumar1.weatherapp.utility.OnItemClickListener
+import com.example.sumitkumar1.weatherapp.utility.addOnItemClickListener
 
 /**
  * @author Sumit Kumar
@@ -42,9 +45,15 @@ class CitiesListFragment : Fragment() {
         rvCities.layoutManager = LinearLayoutManager(activity)
         val cities = listOf(Cities("Bangalore", false), Cities("London", true), Cities("Mumbai", false))
         rvCities.adapter = CitiesListAdapter(activity, cities)
-        rvCities.setOnClickListener({
-            val pos = rvCities.indexOfChild(view)
-            Toast.makeText(context, cities[pos].city, Toast.LENGTH_LONG).show()
+        rvCities.addOnItemClickListener(object: OnItemClickListener {
+            override fun onItemClicked(position: Int, view: View) {
+                val fetchWeatherIntent : Intent = Intent(context, DetailActivity::class.java)
+                fetchWeatherIntent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
+                //fetchWeatherIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                fetchWeatherIntent.putExtra("CITY", cities[position].city)
+                startActivity(fetchWeatherIntent)
+                activity.finish()
+            }
         })
     }
 }

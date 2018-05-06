@@ -47,6 +47,12 @@ class DetailActivity : AppCompatActivity(), DetailView {
         progressLoader.dismiss()
     }
 
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        val city : String = intent?.getStringExtra("CITY")!!
+        detailPresenter.fetchWeatherDataByCityName(city)
+    }
+
     override fun updateUI(response: Response<WeatherData>) {
         tv_location.text = response.body()?.name
         tv_temp.text = convertTempFromStringToInt(response.body()!!.main!!.temp!!).toString() + 0x00B0.toChar()
