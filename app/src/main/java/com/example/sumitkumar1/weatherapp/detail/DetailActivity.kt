@@ -53,7 +53,12 @@ class DetailActivity : AppCompatActivity(), DetailView {
         tv_day.text = getDayOfWeek()
         tv_max_temp.text = convertTempFromStringToInt(response.body()!!.main!!.tempMax!!.toString()).toString() + 0x00B0.toChar()
         tv_min_temp.text = convertTempFromStringToInt(response.body()!!.main!!.tempMin!!.toString()).toString() + 0x00B0.toChar()
-        tv_degree.text = getWindDirection(response.body()!!.wind!!.deg!!.toInt())
+        val deg = response.body()?.wind?.deg?.toInt()
+        if(deg == null) {
+            tv_degree.text = "NE"
+        }else {
+            tv_degree.text = getWindDirection(deg)
+        }
         tv_wind_speed.text = response.body()!!.wind!!.speed!!.toString() + " m/s"
         tv_pressure.text = response.body()!!.main!!.presure!!.toString() + " hPa"
     }

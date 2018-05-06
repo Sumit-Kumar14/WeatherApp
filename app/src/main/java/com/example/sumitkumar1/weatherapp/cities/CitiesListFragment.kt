@@ -7,10 +7,10 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.example.sumitkumar1.weatherapp.R
 import com.example.sumitkumar1.weatherapp.adapters.CitiesListAdapter
 import com.example.sumitkumar1.weatherapp.datasource.Cities
-import kotlinx.android.synthetic.main.fragment_cities.*
 
 /**
  * @author Sumit Kumar
@@ -40,6 +40,11 @@ class CitiesListFragment : Fragment() {
     private fun setUpRecyclerView(view : View) {
         val rvCities = view.findViewById<RecyclerView>(R.id.rv_cities)
         rvCities.layoutManager = LinearLayoutManager(activity)
-        rvCities.adapter = CitiesListAdapter(activity, listOf(Cities("Bangalore", false), Cities("London", true), Cities("Mumbai", false)))
+        val cities = listOf(Cities("Bangalore", false), Cities("London", true), Cities("Mumbai", false))
+        rvCities.adapter = CitiesListAdapter(activity, cities)
+        rvCities.setOnClickListener({
+            val pos = rvCities.indexOfChild(view)
+            Toast.makeText(context, cities[pos].city, Toast.LENGTH_LONG).show()
+        })
     }
 }
