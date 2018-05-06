@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 
 import com.example.sumitkumar1.weatherapp.R
 import com.example.sumitkumar1.weatherapp.adapters.SectionsPagerAdapter
@@ -44,5 +45,9 @@ class CitiesActivity : AppCompatActivity() {
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun setUpTabLayout(view: View) {
+
     }
 }
