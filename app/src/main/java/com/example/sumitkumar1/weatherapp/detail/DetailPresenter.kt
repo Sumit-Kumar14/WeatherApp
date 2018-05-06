@@ -9,7 +9,7 @@ import retrofit2.Response
  * @author Sumit Kumar
  */
 
-class DetailPresenter : INetworkInterface {
+open class DetailPresenter : INetworkInterface {
 
     private val weatherAppService : WeatherAppService
     private val detailViewContract : DetailView
