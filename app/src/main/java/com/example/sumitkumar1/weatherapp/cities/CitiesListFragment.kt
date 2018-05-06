@@ -47,8 +47,8 @@ class CitiesListFragment : Fragment() {
         rvCities.adapter = CitiesListAdapter(activity, cities)
         rvCities.addOnItemClickListener(object: OnItemClickListener {
             override fun onItemClicked(position: Int, view: View) {
-                val fetchWeatherIntent : Intent = Intent(context, DetailActivity::class.java)
-                fetchWeatherIntent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
+                val fetchWeatherIntent = Intent(context, DetailActivity::class.java)
+                fetchWeatherIntent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
                 //fetchWeatherIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 fetchWeatherIntent.putExtra("CITY", cities[position].city)
                 startActivity(fetchWeatherIntent)
