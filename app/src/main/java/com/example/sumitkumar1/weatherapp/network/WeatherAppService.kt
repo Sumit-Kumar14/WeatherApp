@@ -33,16 +33,12 @@ open class WeatherAppService {
     fun fetchWeatherDataFromNetwork(city : String) {
         val apiCall = retrofitInterface.getWeatherDataFromNetwork(city, constants.API_KEY)
         apiCall.enqueue(object : Callback<WeatherData> {
-            override fun onResponse(call: Call<WeatherData>?, response: Response<WeatherData>?) {
-                if (response != null) {
-                    networkInterface.onSuccess(response)
-                }
+            override fun onResponse(call: Call<WeatherData>, response: Response<WeatherData>) {
+                networkInterface.onSuccess(response)
             }
 
-            override fun onFailure(call: Call<WeatherData>?, t: Throwable?) {
-                if (t != null) {
-                    networkInterface.onError(t)
-                }
+            override fun onFailure(call: Call<WeatherData>, t: Throwable) {
+                networkInterface.onError(t)
             }
         })
     }
