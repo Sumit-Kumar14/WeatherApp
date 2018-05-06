@@ -65,7 +65,7 @@ class DetailActivity : AppCompatActivity(), DetailView {
 
     private fun setUpFabListener() {
         fab.setOnClickListener {
-            val citiesActivityIntent : Intent = Intent(mContext, CitiesActivity::class.java)
+            val citiesActivityIntent = Intent(mContext, CitiesActivity::class.java)
             startActivity(citiesActivityIntent)
         }
     }
