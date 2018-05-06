@@ -4,6 +4,9 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.example.sumitkumar1.weatherapp.R
 import android.app.ProgressDialog
+import android.content.Context
+import android.content.Intent
+import com.example.sumitkumar1.weatherapp.cities.CitiesActivity
 import com.example.sumitkumar1.weatherapp.datasource.WeatherData
 import kotlinx.android.synthetic.main.activity_weather.*
 import retrofit2.Response
@@ -11,12 +14,17 @@ import java.util.*
 
 class DetailActivity : AppCompatActivity(), DetailView {
 
-    lateinit var detailPresenter : DetailPresenter
-    lateinit var progressLoader : ProgressDialog
+    private lateinit var detailPresenter : DetailPresenter
+    private lateinit var progressLoader : ProgressDialog
+    private lateinit var mContext : Context
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_weather)
+
+        mContext = this
+
+        setUpFabListener()
 
         initProgressDialog()
 
@@ -77,5 +85,12 @@ class DetailActivity : AppCompatActivity(), DetailView {
             in 270..360 -> return "NW"
         }
         return "NE"
+    }
+
+    private fun setUpFabListener() {
+        fab.setOnClickListener {
+            val citiesActivityIntent : Intent = Intent(mContext, CitiesActivity::class.java)
+            startActivity(citiesActivityIntent)
+        }
     }
 }
