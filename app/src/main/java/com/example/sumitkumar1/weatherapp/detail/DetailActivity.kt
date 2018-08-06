@@ -6,6 +6,7 @@ import com.example.sumitkumar1.weatherapp.R
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import com.example.sumitkumar1.weatherapp.WeatherApp
 import com.example.sumitkumar1.weatherapp.cities.CitiesActivity
 import com.example.sumitkumar1.weatherapp.datasource.WeatherData
 import kotlinx.android.synthetic.main.activity_weather.*
@@ -27,7 +28,7 @@ class DetailActivity : AppCompatActivity(), DetailView {
 
         initProgressDialog()
 
-        detailPresenter = DetailPresenter(this)
+        detailPresenter = DetailPresenter(WeatherApp.mInstance?.service, this)
         detailPresenter.fetchWeatherDataByCityName("Bangalore")
     }
 

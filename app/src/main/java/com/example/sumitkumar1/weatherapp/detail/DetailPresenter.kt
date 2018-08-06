@@ -10,14 +10,16 @@ import java.util.*
  * @author Sumit Kumar
  */
 
-open class DetailPresenter(detailView: DetailView) : INetworkInterface {
+class DetailPresenter(private val weatherAppService: WeatherAppService?,
+                           private val detailViewContract: DetailView) : INetworkInterface {
 
-    private val weatherAppService : WeatherAppService
-    private val detailViewContract : DetailView = detailView
+    init {
+        weatherAppService?.networkInterface = this
+    }
 
     fun fetchWeatherDataByCityName(city : String) {
         detailViewContract.showLoader()
-        weatherAppService.fetchWeatherDataFromNetwork(city)
+        weatherAppService?.fetchWeatherDataFromNetwork(city)
     }
 
     override fun onSuccess(response: Response<WeatherData>) {
@@ -88,9 +90,5 @@ open class DetailPresenter(detailView: DetailView) : INetworkInterface {
         } else {
             getWindDirection(deg)
         }
-    }
-
-    init {
-        weatherAppService = WeatherAppService(this)
     }
 }
