@@ -46,8 +46,4 @@ class CitiesActivity : AppCompatActivity() {
 
         return super.onOptionsItemSelected(item)
     }
-
-    private fun setUpTabLayout(view: View) {
-
-    }
 }
