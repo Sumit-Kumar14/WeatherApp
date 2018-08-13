@@ -12,13 +12,19 @@ import retrofit2.converter.gson.GsonConverterFactory
  * @author Sumit Kumar
  */
 
-open class WeatherAppService(n: INetworkInterface) {
+
+interface NetworkService {
+    fun fetchWeatherDataFromNetwork(city : String)
+}
+
+
+open class WeatherAppService(n: INetworkInterface): NetworkService {
 
     private var retrofitClient : Retrofit
     private var retrofitInterface : WeatherAppServiceInterface
     private var networkInterface : INetworkInterface = n
 
-    fun fetchWeatherDataFromNetwork(city : String) {
+    override fun fetchWeatherDataFromNetwork(city : String) {
         val apiCall = retrofitInterface.getWeatherDataFromNetwork(city, Constants.API_KEY)
         apiCall.enqueue(object : Callback<WeatherData> {
             override fun onResponse(call: Call<WeatherData>, response: Response<WeatherData>) {

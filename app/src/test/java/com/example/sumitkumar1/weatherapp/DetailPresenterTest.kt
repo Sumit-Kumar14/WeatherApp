@@ -2,6 +2,7 @@ package com.example.sumitkumar1.weatherapp
 
 import com.example.sumitkumar1.weatherapp.detail.DetailPresenter
 import com.example.sumitkumar1.weatherapp.detail.DetailView
+import com.example.sumitkumar1.weatherapp.network.NetworkService
 import com.example.sumitkumar1.weatherapp.network.WeatherAppService
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
@@ -15,9 +16,10 @@ import org.mockito.Mockito
  */
 class DetailPresenterTest {
 
-    lateinit var weatherAppService : WeatherAppService
+    lateinit var weatherAppService : NetworkService
     lateinit var detailPresenter : DetailPresenter
     lateinit var view : DetailView
+    private val cityNameString = "Bangalore"
 
     @Before
     fun setUp() {
@@ -28,8 +30,20 @@ class DetailPresenterTest {
 
     @Test
     fun shouldFetchWeatherFromNetwork() {
-        detailPresenter.fetchWeatherDataByCityName("Bangalore")
+        detailPresenter.fetchWeatherDataByCityName(cityNameString)
+        verify(view).showLoader()
+        //verify(weatherAppService).fetchWeatherDataFromNetwork(cityNameString)
+    }
 
-        verify(view).hideLoader()
+    @Test
+    fun shouldConvertTempFromStringToInt() {
+        assertEquals(0, detailPresenter.convertTempFromStringToInt(""))
+        assertEquals(0, detailPresenter.convertTempFromStringToInt("invalid"))
+        assertEquals(29, detailPresenter.convertTempFromStringToInt("303"))
+    }
+
+    @Test
+    fun shouldGiveDayOfWeek() {
+
     }
 }
