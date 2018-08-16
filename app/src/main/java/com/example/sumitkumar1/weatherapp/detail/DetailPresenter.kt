@@ -21,9 +21,9 @@ class DetailPresenter(private val detailViewContract: DetailView) : INetworkInte
         weatherAppService.fetchWeatherDataFromNetwork(city)
     }
 
-    override fun onSuccess(response: Response<WeatherData>) {
+    override fun onSuccess(response: WeatherData?) {
         detailViewContract.hideLoader()
-        detailViewContract.updateUI(response.body())
+        detailViewContract.updateUI(response)
     }
 
     override fun onError(error: Throwable) {

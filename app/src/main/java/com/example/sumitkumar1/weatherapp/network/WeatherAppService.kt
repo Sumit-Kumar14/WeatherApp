@@ -28,7 +28,7 @@ open class WeatherAppService(n: INetworkInterface): NetworkService {
         val apiCall = retrofitInterface.getWeatherDataFromNetwork(city, Constants.API_KEY)
         apiCall.enqueue(object : Callback<WeatherData> {
             override fun onResponse(call: Call<WeatherData>, response: Response<WeatherData>) {
-                networkInterface.onSuccess(response)
+                networkInterface.onSuccess(response.body())
             }
 
             override fun onFailure(call: Call<WeatherData>, t: Throwable) {
