@@ -12,21 +12,37 @@ import retrofit2.converter.gson.GsonConverterFactory
  * @author Sumit Kumar
  */
 
-open class WeatherAppService(retrofit: Retrofit) {
 
-    private var retrofitInterface : WeatherAppServiceInterface = retrofit.create(WeatherAppServiceInterface::class.java)
-    var networkInterface : INetworkInterface? = null
+interface NetworkService {
+    fun fetchWeatherDataFromNetwork(city : String)
+}
 
-    fun fetchWeatherDataFromNetwork(city : String) {
+
+open class WeatherAppService(n: INetworkInterface): NetworkService {
+
+    private var retrofitClient : Retrofit
+    private var retrofitInterface : WeatherAppServiceInterface
+    private var networkInterface : INetworkInterface = n
+
+    override fun fetchWeatherDataFromNetwork(city : String) {
         val apiCall = retrofitInterface.getWeatherDataFromNetwork(city, Constants.API_KEY)
         apiCall.enqueue(object : Callback<WeatherData> {
             override fun onResponse(call: Call<WeatherData>, response: Response<WeatherData>) {
-                networkInterface?.onSuccess(response)
+                networkInterface.onSuccess(response.body())
             }
 
             override fun onFailure(call: Call<WeatherData>, t: Throwable) {
-                networkInterface?.onError(t)
+                networkInterface.onError(t)
             }
         })
     }
+
+    init {
+        retrofitClient = Retrofit.Builder()
+                .baseUrl(Constants.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+        retrofitInterface = retrofitClient.create(WeatherAppServiceInterface::class.java)
+    }
+
 }

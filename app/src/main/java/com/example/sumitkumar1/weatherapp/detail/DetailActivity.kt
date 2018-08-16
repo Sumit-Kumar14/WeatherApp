@@ -9,6 +9,7 @@ import android.content.Intent
 import com.example.sumitkumar1.weatherapp.WeatherApp
 import com.example.sumitkumar1.weatherapp.cities.CitiesActivity
 import com.example.sumitkumar1.weatherapp.datasource.WeatherData
+import com.example.sumitkumar1.weatherapp.utility.Utils
 import kotlinx.android.synthetic.main.activity_weather.*
 import retrofit2.Response
 
@@ -53,10 +54,10 @@ class DetailActivity : AppCompatActivity(), DetailView {
         detailPresenter.fetchWeatherDataByCityName(city)
     }
 
-    override fun updateUI(response: Response<WeatherData>) {
-        tv_location.text = response.body()?.name
+    override fun updateUI(response: WeatherData?) {
+        tv_location.text = response?.name
         tv_temp.text = detailPresenter.getMainTemp(response)
-        tv_day.text = detailPresenter.getDayOfWeek()
+        tv_day.text = Utils.getDayOfWeek()
         tv_max_temp.text = detailPresenter.getMaxTemp(response)
         tv_min_temp.text = detailPresenter.getMinTemp(response)
         tv_degree.text = detailPresenter.getWinDir(response)

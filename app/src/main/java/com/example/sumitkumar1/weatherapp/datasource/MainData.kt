@@ -7,20 +7,13 @@ import java.io.Serializable
  * @author Sumit Kumar
  */
 
-class MainData : Serializable {
-
-    @SerializedName("temp")
-    var temp: String? = null
-
-    @SerializedName("pressure")
-    var presure : Int? = null
-
-    @SerializedName("humidity")
-    var humidity : Int? = null
+data class MainData(var temp: String? = null,
+                    var pressure: Int? = null,
+                    var humidity: Int? = null) {
 
     @SerializedName("temp_min")
-    var tempMin : Float? = null
+    var tempMin: Float? = null
 
     @SerializedName("temp_max")
-    var tempMax : Float? = null
+    var tempMax: Float? = null
 }

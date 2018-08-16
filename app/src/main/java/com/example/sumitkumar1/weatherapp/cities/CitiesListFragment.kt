@@ -28,8 +28,24 @@ class CitiesListFragment : Fragment() {
         return rootView
     }
 
+    private fun setUpRecyclerView(view: View) {
+        val rvCities = view.findViewById<RecyclerView>(R.id.rv_cities)
+        rvCities.layoutManager = LinearLayoutManager(activity)
+        val cities = listOf(Cities("Bangalore", false), Cities("London", true), Cities("Mumbai", false))
+        rvCities.adapter = CitiesListAdapter(activity, cities)
+        rvCities.addOnItemClickListener(object : OnItemClickListener {
+            override fun onItemClicked(position: Int, view: View) {
+                val fetchWeatherIntent = Intent(context, DetailActivity::class.java)
+                fetchWeatherIntent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                fetchWeatherIntent.putExtra("CITY", cities[position].city)
+                startActivity(fetchWeatherIntent)
+                activity.finish()
+            }
+        })
+    }
+
     companion object {
-        private val ARG_SECTION_NUMBER = "section_number"
+        private const val ARG_SECTION_NUMBER = "section_number"
 
         fun newInstance(sectionNumber: Int): CitiesListFragment {
             val fragment = CitiesListFragment()
@@ -38,22 +54,5 @@ class CitiesListFragment : Fragment() {
             fragment.arguments = args
             return fragment
         }
-    }
-
-    private fun setUpRecyclerView(view : View) {
-        val rvCities = view.findViewById<RecyclerView>(R.id.rv_cities)
-        rvCities.layoutManager = LinearLayoutManager(activity)
-        val cities = listOf(Cities("Bangalore", false), Cities("London", true), Cities("Mumbai", false))
-        rvCities.adapter = CitiesListAdapter(activity, cities)
-        rvCities.addOnItemClickListener(object: OnItemClickListener {
-            override fun onItemClicked(position: Int, view: View) {
-                val fetchWeatherIntent = Intent(context, DetailActivity::class.java)
-                fetchWeatherIntent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
-                //fetchWeatherIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                fetchWeatherIntent.putExtra("CITY", cities[position].city)
-                startActivity(fetchWeatherIntent)
-                activity.finish()
-            }
-        })
     }
 }
