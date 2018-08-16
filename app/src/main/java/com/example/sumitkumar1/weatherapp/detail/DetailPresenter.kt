@@ -12,13 +12,18 @@ import java.util.*
  * @author Sumit Kumar
  */
 
-class DetailPresenter(private val detailViewContract: DetailView) : INetworkInterface {
+class DetailPresenter(private val weatherAppService: NetworkService?,
+                      private val detailViewContract: DetailView) : INetworkInterface {
 
-    private val weatherAppService: NetworkService = WeatherAppService(this)
+    init {
+        if (weatherAppService is WeatherAppService) {
+            weatherAppService.networkInterface = this
+        }
+    }
 
     fun fetchWeatherDataByCityName(city: String) {
         detailViewContract.showLoader()
-        weatherAppService.fetchWeatherDataFromNetwork(city)
+        weatherAppService?.fetchWeatherDataFromNetwork(city)
     }
 
     override fun onSuccess(response: WeatherData?) {

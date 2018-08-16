@@ -25,14 +25,14 @@ class DetailPresenterTest {
     fun setUp() {
         view = mock {  }
         weatherAppService = mock {  }
-        detailPresenter = DetailPresenter(view)
+        detailPresenter = DetailPresenter(weatherAppService, view)
     }
 
     @Test
     fun shouldFetchWeatherFromNetwork() {
         detailPresenter.fetchWeatherDataByCityName(cityNameString)
         verify(view).showLoader()
-        //verify(weatherAppService).fetchWeatherDataFromNetwork(cityNameString)
+        verify(weatherAppService).fetchWeatherDataFromNetwork(cityNameString)
     }
 
     @Test
