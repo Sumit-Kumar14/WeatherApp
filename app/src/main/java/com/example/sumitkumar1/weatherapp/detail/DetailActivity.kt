@@ -50,7 +50,7 @@ class DetailActivity : AppCompatActivity(), DetailView {
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
-        val city : String = intent?.getStringExtra("CITY")!!
+        val city : String = intent?.getStringExtra("CITY") ?: "Bangalore"
         detailPresenter.fetchWeatherDataByCityName(city)
     }
 

@@ -42,35 +42,52 @@ class DetailPresenter(private val weatherAppService: NetworkService?,
 
 
     fun getWindSpeed(response: WeatherData?): String {
-        return response?.wind?.speed?.toString() + " m/s"
+        return if (response?.wind?.speed ?: 0f == 0f) {
+            "0 m/s"
+        } else {
+            response?.wind?.speed?.toString() + " m/s"
+        }
     }
 
     fun getPressure(response: WeatherData?): String {
-        return response?.main?.pressure?.toString() + " hPa"
+        return if (response?.main?.pressure ?: 0 == 0) {
+            "0 hPa"
+        } else {
+            response?.main?.pressure?.toString() + " hPa"
+        }
     }
 
     fun getMainTemp(response: WeatherData?): String {
-        val temp = convertTempFromStringToInt(response?.main?.temp!!).toString()
+        if (response?.main?.temp ?: "" == "") {
+            return "0" + 0x00B0.toChar()
+        }
+
+        val temp = convertTempFromStringToInt(response?.main?.temp ?: "").toString()
         return temp + 0x00B0.toChar()
     }
 
     fun getMinTemp(response: WeatherData?): String {
-        val temp = convertTempFromStringToInt(response?.main?.tempMin?.toString()!!).toString()
+        if (response?.main == null) {
+            return "0" + 0x00B0.toChar()
+        }
+        val temp = convertTempFromStringToInt(response.main?.tempMin?.toString() ?: "0").toString()
         return temp + 0x00B0.toChar()
     }
 
     fun getMaxTemp(response: WeatherData?): String {
-        val temp = convertTempFromStringToInt(response?.main?.tempMax?.toString()!!).toString()
+        if (response?.main == null) {
+            return "0" + 0x00B0.toChar()
+        }
+        val temp = convertTempFromStringToInt(response.main?.tempMax?.toString() ?: "0").toString()
         return temp + 0x00B0.toChar()
     }
 
     fun getWinDir(response: WeatherData?): String {
-        val deg = response?.wind?.deg?.toInt()
-        return if (deg == null) {
-            "NE"
-        } else {
-            Utils.getWindDirection(deg)
+        if (response?.wind == null) {
+            return "NE"
         }
-    }
 
+        val deg = (response.wind?.deg ?: 0f).toInt()
+        return Utils.getWindDirection(deg)
+    }
 }
