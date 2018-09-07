@@ -15,7 +15,7 @@ class UtilsTest {
     }
 
     @Test
-    fun shouldReturnValidWindDirectionForDegreeAbove_360() {
+    fun shouldReturnValidWindDirection() {
         assertEquals("SE", Utils.getWindDirection(450))
         assertEquals("NW", Utils.getWindDirection(-45))
         assertEquals("SW", Utils.getWindDirection(545))
