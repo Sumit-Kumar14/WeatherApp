@@ -13,5 +13,5 @@ interface DetailView {
 
     fun hideLoader()
 
-    fun updateUI(response: Response<WeatherData>)
+    fun updateUI(response: WeatherData?)
 }

@@ -1,8 +1,6 @@
 package com.example.sumitkumar1.weatherapp.network
 
 import com.example.sumitkumar1.weatherapp.datasource.WeatherData
-import retrofit2.Response
-
 
 /**
  * @author Sumit Kumar
@@ -10,7 +8,7 @@ import retrofit2.Response
 
 interface INetworkInterface {
 
-    fun onSuccess(response : Response<WeatherData>)
+    fun onSuccess(response : WeatherData?)
 
     fun  onError(error: Throwable)
 }
