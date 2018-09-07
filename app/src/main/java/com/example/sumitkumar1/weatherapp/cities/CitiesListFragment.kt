@@ -21,23 +21,27 @@ import com.example.sumitkumar1.weatherapp.utility.addOnItemClickListener
 
 class CitiesListFragment : Fragment() {
 
+    private val cities = listOf(
+            Cities("Bangalore", false),
+            Cities("London", true),
+            Cities("Mumbai", false)
+    )
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val rootView = inflater.inflate(R.layout.fragment_cities, container, false)
-        setUpRecyclerView(rootView)
-        return rootView
+        return inflater.inflate(R.layout.fragment_cities, container, false)
     }
 
-    private fun setUpRecyclerView(view: View) {
-        val rvCities = view.findViewById<RecyclerView>(R.id.rv_cities)
-        rvCities.layoutManager = LinearLayoutManager(activity)
-        val cities = listOf(Cities("Bangalore", false), Cities("London", true), Cities("Mumbai", false))
-        rvCities.adapter = CitiesListAdapter(activity, cities)
-        rvCities.addOnItemClickListener(object : OnItemClickListener {
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val rvCities = view?.findViewById<RecyclerView>(R.id.rv_cities)
+        rvCities?.layoutManager = LinearLayoutManager(activity)
+        rvCities?.adapter = CitiesListAdapter(activity, cities)
+        rvCities?.addOnItemClickListener(object : OnItemClickListener {
             override fun onItemClicked(position: Int, view: View) {
                 val fetchWeatherIntent = Intent(context, DetailActivity::class.java)
                 fetchWeatherIntent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
-                fetchWeatherIntent.putExtra("CITY", cities[position].city)
+                fetchWeatherIntent.putExtra("CITY", cities[position].cityName)
                 startActivity(fetchWeatherIntent)
                 activity.finish()
             }

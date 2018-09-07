@@ -28,16 +28,20 @@ class CitiesListAdapter(private val mContext: Context, private val citiesList: L
     }
 
     override fun onBindViewHolder(holder: CitiesViewHolder, position: Int) {
-        holder.cityName.text = citiesList[position].city
-        if (citiesList[position].isFav) {
-            holder.fabIcon.setImageResource(R.drawable.ic_favorite_black_24px)
-        } else {
-            holder.fabIcon.setImageResource(R.drawable.ic_favorite_border_black_24px)
-        }
+        holder.bindView(citiesList[position])
     }
 
     class CitiesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var cityName = itemView.tv_city_name as TextView
         var fabIcon = itemView.im_fab as ImageView
+
+        fun bindView(city: Cities) {
+            cityName.text = city.cityName
+            if (city.isFav) {
+                fabIcon.setImageResource(R.drawable.ic_favorite_black_24px)
+            } else {
+                fabIcon.setImageResource(R.drawable.ic_favorite_border_black_24px)
+            }
+        }
     }
 }
