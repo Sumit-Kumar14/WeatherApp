@@ -29,7 +29,7 @@ class DetailActivity : AppCompatActivity(), DetailView {
 
         initProgressDialog()
 
-        detailPresenter = DetailPresenter(WeatherApp.mInstance?.service, this)
+        detailPresenter = DetailPresenter(this)
         detailPresenter.fetchWeatherDataByCityName("Bangalore")
     }
 

@@ -1,29 +1,30 @@
 package com.example.sumitkumar1.weatherapp.detail
 
+import com.example.sumitkumar1.weatherapp.WeatherApp
 import com.example.sumitkumar1.weatherapp.datasource.WeatherData
 import com.example.sumitkumar1.weatherapp.network.INetworkInterface
 import com.example.sumitkumar1.weatherapp.network.NetworkService
 import com.example.sumitkumar1.weatherapp.network.WeatherAppService
 import com.example.sumitkumar1.weatherapp.utility.Utils
-import retrofit2.Response
-import java.util.*
+import javax.inject.Inject
 
 /**
  * @author Sumit Kumar
  */
 
-class DetailPresenter(private val weatherAppService: NetworkService?,
-                      private val detailViewContract: DetailView) : INetworkInterface {
+class DetailPresenter(
+        private val detailViewContract: DetailView) : INetworkInterface {
+
+    @Inject lateinit var weatherAppService: WeatherAppService
 
     init {
-        if (weatherAppService is WeatherAppService) {
-            weatherAppService.networkInterface = this
-        }
+        WeatherApp.mInstance?.appComponent?.injectDetailPresenter(this)
+        weatherAppService.networkInterface = this
     }
 
     fun fetchWeatherDataByCityName(city: String) {
         detailViewContract.showLoader()
-        weatherAppService?.fetchWeatherDataFromNetwork(city)
+        weatherAppService.fetchWeatherDataFromNetwork(city)
     }
 
     override fun onSuccess(response: WeatherData?) {
