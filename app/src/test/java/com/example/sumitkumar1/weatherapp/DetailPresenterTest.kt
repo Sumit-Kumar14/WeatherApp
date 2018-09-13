@@ -26,7 +26,7 @@ class DetailPresenterTest {
     fun setUp() {
         view = mock {  }
         weatherAppService = mock {  }
-        detailPresenter = DetailPresenter(weatherAppService, view)
+        detailPresenter = DetailPresenter(view)
     }
 
     @Test

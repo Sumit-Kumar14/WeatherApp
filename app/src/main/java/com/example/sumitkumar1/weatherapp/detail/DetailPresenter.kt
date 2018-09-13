@@ -3,7 +3,6 @@ package com.example.sumitkumar1.weatherapp.detail
 import com.example.sumitkumar1.weatherapp.WeatherApp
 import com.example.sumitkumar1.weatherapp.datasource.WeatherData
 import com.example.sumitkumar1.weatherapp.network.INetworkInterface
-import com.example.sumitkumar1.weatherapp.network.NetworkService
 import com.example.sumitkumar1.weatherapp.network.WeatherAppService
 import com.example.sumitkumar1.weatherapp.utility.Utils
 import javax.inject.Inject
